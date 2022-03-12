@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,19 +13,25 @@ const Header = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="relative">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <HomeIcon />
-          </IconButton>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <HomeIcon />
+            </IconButton>
+          </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             E-commerce
           </Typography>
-          <Button color="inherit">Cart</Button>
+          <Button color="inherit">
+            <Link to="/cart" style={{ textDecoration: "none" }}>
+              Cart
+            </Link>
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
