@@ -13,7 +13,9 @@ export const getProducts = createAsyncThunk(
   async (dispatch, getState) => {
     return await axios
       .get(urlProducts)
-      .then((res) => res.data)
+      .then((res) => {
+        return res.data;
+      })
       .catch((error) => console.log(error));
   }
 );
@@ -28,7 +30,7 @@ export const productsSlice = createSlice({
   },
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
-      state.products.push(action.payload);
+      state.products = action.payload;
     },
   },
 });
