@@ -2,11 +2,10 @@ import axios from "axios";
 
 let urlProducts = "https://fakestoreapi.com/products";
 
-export const getProductsFromApi = async (setMethod) => {
+export const getProductsFromApi = async () => {
   try {
     let response = await axios.get(urlProducts);
-    setMethod(response.data);
-    return response;
+    return response.data;
   } catch (error) {
     console.log(error);
   }
