@@ -9,9 +9,9 @@ const Shop = () => {
 
   const map = products.map((product) => {
     return products.length ? (
-      <Grid item>
+      <Grid item key={product.id}>
         <ProductCard
-          key={product.id}
+          id={product.id}
           title={product.title}
           img={product.image}
           alt={product.title}

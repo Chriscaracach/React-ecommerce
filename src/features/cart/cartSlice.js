@@ -24,7 +24,8 @@ export const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addToCart: (state, action) => {
+    addProductToCart: (state, action) => {
+      console.log(action.payload);
       state.cart.push(action.payload);
     },
   },
@@ -35,7 +36,7 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { addToCart } = productsSlice.actions;
+export const { addProductToCart } = productsSlice.actions;
 
 export const products = (state) => state.products.value;
 

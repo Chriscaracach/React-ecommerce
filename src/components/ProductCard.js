@@ -10,12 +10,16 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { addProductToCart } from "../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-const ProductCard = ({ img, alt, title, description }) => {
+const ProductCard = ({ img, alt, title, description, id }) => {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,6 +28,15 @@ const ProductCard = ({ img, alt, title, description }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const addToCart = (uniqueId) => {
+    let filteredProduct = products.filter((product) => {
+      return product.id === uniqueId;
+    });
+
+    dispatch(addProductToCart(filteredProduct));
+  };
+
   return (
     <Card sx={{ width: 250, height: 450 }}>
       <CardMedia component="img" height="140" image={img} alt={alt} />
@@ -33,7 +46,7 @@ const ProductCard = ({ img, alt, title, description }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">
+        <Button size="small" onClick={() => addToCart(id)}>
           <AddShoppingCartIcon />
         </Button>
         <Button variant="outlined" onClick={handleClickOpen}>
