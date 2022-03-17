@@ -1,9 +1,10 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -11,15 +12,13 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { addProductToCart } from "../features/cart/cartSlice";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteProductFromCart } from "../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 
-const ProductCard = ({ img, alt, title, description, id }) => {
+const CartProductCard = ({ id, img, title, price, description }) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,29 +28,38 @@ const ProductCard = ({ img, alt, title, description, id }) => {
     setOpen(false);
   };
 
-  const addToCart = (uniqueId) => {
-    let filteredProduct = products.filter((product) => {
-      return product.id === uniqueId;
-    });
-    dispatch(addProductToCart(filteredProduct));
+  const deleteFromCart = (uniqueId) => {
+    dispatch(deleteProductFromCart(uniqueId));
   };
 
   return (
-    <Card sx={{ width: 250, height: 450 }}>
-      <CardMedia component="img" height="140" image={img} alt={alt} />
-      <CardContent>
-        <Typography variant="h6" component="div">
-          {title}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" onClick={() => addToCart(id)}>
-          <AddShoppingCartIcon />
+    <>
+      <ListItem alignItems="flex-start">
+        <ListItemAvatar>
+          <Avatar alt={title} src={img} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={title}
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: "inline" }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+                ${price}
+              </Typography>
+              <Button onClick={handleClickOpen}>Detail</Button>
+            </React.Fragment>
+          }
+        />
+        <Button onClick={() => deleteFromCart(id)}>
+          <DeleteIcon />
         </Button>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Detail
-        </Button>
-      </CardActions>
+      </ListItem>
+      <Divider variant="inset" component="li" />
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -77,8 +85,8 @@ const ProductCard = ({ img, alt, title, description, id }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Card>
+    </>
   );
 };
 
-export default ProductCard;
+export default CartProductCard;
