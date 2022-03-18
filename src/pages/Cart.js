@@ -9,12 +9,12 @@ const Cart = () => {
   const map = cart.map((product) => {
     return (
       <CartProductCard
-        key={product[0].id}
-        id={product[0].id}
-        img={product[0].image}
-        title={product[0].title}
-        price={product[0].price}
-        description={product[0].description}
+        key={product.id}
+        id={product.id}
+        img={product.image}
+        title={product.title}
+        price={product.price}
+        description={product.description}
       ></CartProductCard>
     );
   });

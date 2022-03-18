@@ -29,7 +29,7 @@ export const productsSlice = createSlice({
     },
     deleteProductFromCart: (state, action) => {
       state.cart = state.cart.filter((product) => {
-        return product.id !== action.payload.id;
+        return product.id !== action.payload;
       });
     },
   },

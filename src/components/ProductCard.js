@@ -33,7 +33,7 @@ const ProductCard = ({ img, alt, title, description, id }) => {
     let filteredProduct = products.filter((product) => {
       return product.id === uniqueId;
     });
-    dispatch(addProductToCart(filteredProduct));
+    dispatch(addProductToCart(filteredProduct[0]));
   };
 
   return (
