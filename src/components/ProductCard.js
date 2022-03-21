@@ -12,11 +12,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { sweetAlertSuccess } from "../services/sweetAlertServices";
 import { addProductToCart } from "../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-const ProductCard = ({ img, alt, title, description, id }) => {
+const ProductCard = ({ img, alt, title, description, id, price }) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
@@ -34,6 +35,7 @@ const ProductCard = ({ img, alt, title, description, id }) => {
       return product.id === uniqueId;
     });
     dispatch(addProductToCart(filteredProduct[0]));
+    sweetAlertSuccess("Product added to cart");
   };
 
   return (
@@ -42,6 +44,9 @@ const ProductCard = ({ img, alt, title, description, id }) => {
       <CardContent>
         <Typography variant="h6" component="div">
           {title}
+        </Typography>
+        <Typography variant="p" component="p">
+          ${price}
         </Typography>
       </CardContent>
       <CardActions>

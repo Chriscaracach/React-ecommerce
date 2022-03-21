@@ -14,6 +14,7 @@ const Shop = () => {
           id={product.id}
           title={product.title}
           img={product.image}
+          price={product.price}
           alt={product.title}
           description={product.description}
         ></ProductCard>

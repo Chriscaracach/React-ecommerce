@@ -13,6 +13,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import DeleteIcon from "@mui/icons-material/Delete";
+import TextField from "@mui/material/TextField";
+import { sweetAlertSuccess } from "../services/sweetAlertServices";
 import { deleteProductFromCart } from "../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 
@@ -30,11 +32,12 @@ const CartProductCard = ({ id, img, title, price, description }) => {
 
   const deleteFromCart = (uniqueId) => {
     dispatch(deleteProductFromCart(uniqueId));
+    sweetAlertSuccess("Product removed from cart");
   };
 
   return (
     <>
-      <ListItem alignItems="flex-start">
+      <ListItem>
         <ListItemAvatar>
           <Avatar alt={title} src={img} />
         </ListItemAvatar>
@@ -51,9 +54,19 @@ const CartProductCard = ({ id, img, title, price, description }) => {
                 ${price}
               </Typography>
               <Button onClick={handleClickOpen}>Detail</Button>
+              <TextField
+                id="outlined-number"
+                label="Quantity"
+                type="number"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                defaultValue="1"
+              />
             </React.Fragment>
           }
         />
+
         <Button onClick={() => deleteFromCart(id)}>
           <DeleteIcon />
         </Button>
