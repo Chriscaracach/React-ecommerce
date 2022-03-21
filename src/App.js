@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, []); //eslint-disable-line
 
   return (
     <div className="App">

@@ -13,7 +13,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { sweetAlertSuccess } from "../services/sweetAlertServices";
-import { addProductToCart } from "../features/cart/cartSlice";
+import {
+  addProductToCart,
+  addQuantityDefault,
+} from "../features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -35,6 +38,7 @@ const ProductCard = ({ img, alt, title, description, id, price }) => {
       return product.id === uniqueId;
     });
     dispatch(addProductToCart(filteredProduct[0]));
+    dispatch(addQuantityDefault(1));
     sweetAlertSuccess("Product added to cart");
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -15,19 +15,28 @@ import Grid from "@mui/material/Grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
 import { sweetAlertSuccess } from "../services/sweetAlertServices";
-import { deleteProductFromCart } from "../features/cart/cartSlice";
-import { useDispatch } from "react-redux";
+import {
+  modifyQuantity,
+  deleteProductFromCart,
+} from "../features/cart/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const CartProductCard = ({ id, img, title, price, description }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const { cart } = useSelector((state) => state.products);
+  const productQuantity = cart.filter((product) => product.id === id)[0]
+    .quantity;
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleQuantity = (amount) => {
+    dispatch(modifyQuantity({ productId: id, amount: amount }));
   };
 
   const deleteFromCart = (uniqueId) => {
@@ -41,31 +50,37 @@ const CartProductCard = ({ id, img, title, price, description }) => {
         <ListItemAvatar>
           <Avatar alt={title} src={img} />
         </ListItemAvatar>
+
         <ListItemText
           primary={title}
           secondary={
             <React.Fragment>
-              <Typography
-                sx={{ display: "inline" }}
-                component="span"
-                variant="body2"
-                color="text.primary"
-              >
-                ${price}
-              </Typography>
-              <Button onClick={handleClickOpen}>Detail</Button>
               <TextField
                 id="outlined-number"
                 label="Quantity"
                 type="number"
+                size="small"
+                inputProps={{ min: 1 }}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                sx={{ width: "70px" }}
                 defaultValue="1"
+                onChange={(e) => handleQuantity(e.target.value)}
               />
+              <Button onClick={handleClickOpen}>Detail</Button>
             </React.Fragment>
           }
         />
+
+        <Typography
+          sx={{ display: "inline" }}
+          component="span"
+          variant="body2"
+          color="text.primary"
+        >
+          ${price * productQuantity}
+        </Typography>
 
         <Button onClick={() => deleteFromCart(id)}>
           <DeleteIcon />

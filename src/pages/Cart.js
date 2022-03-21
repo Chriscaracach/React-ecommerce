@@ -1,8 +1,8 @@
 import React from "react";
 import List from "@mui/material/List";
-import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import CartProductCard from "../components/CartProductCard";
+import TotalCard from "../components/TotalCard";
 
 const Cart = () => {
   const { cart } = useSelector((state) => state.products);
@@ -24,8 +24,7 @@ const Cart = () => {
       {map.length ? (
         <>
           <List sx={{ width: "100%" }}>{map}</List>
-          {/* Este boton va a ser para pagar */}
-          <Button variant="contained">Buy</Button>
+          <TotalCard></TotalCard>
         </>
       ) : (
         <p>Empty cart</p>

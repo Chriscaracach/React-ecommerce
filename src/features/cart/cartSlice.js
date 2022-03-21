@@ -1,3 +1,4 @@
+import { Scale } from "@mui/icons-material";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -32,6 +33,17 @@ export const productsSlice = createSlice({
         return product.id !== action.payload;
       });
     },
+    addQuantityDefault: (state, action) => {
+      state.cart.forEach((product) => {
+        product.quantity = action.payload;
+      });
+    },
+    modifyQuantity: (state, action) => {
+      let productIndex = state.cart.findIndex(
+        (element) => element.id === action.payload.productId
+      );
+      state.cart[productIndex].quantity = action.payload.amount;
+    },
   },
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
@@ -40,8 +52,12 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { addProductToCart, deleteProductFromCart } =
-  productsSlice.actions;
+export const {
+  addProductToCart,
+  deleteProductFromCart,
+  addQuantityDefault,
+  modifyQuantity,
+} = productsSlice.actions;
 
 export const products = (state) => state.products.value;
 export const cartProducts = (state) => state.cart.value;
