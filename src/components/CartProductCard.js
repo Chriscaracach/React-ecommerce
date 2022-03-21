@@ -86,7 +86,6 @@ const CartProductCard = ({ id, img, title, price, description }) => {
           <DeleteIcon />
         </Button>
       </ListItem>
-      <Divider variant="inset" component="li" />
 
       <Dialog
         open={open}
@@ -113,6 +112,7 @@ const CartProductCard = ({ id, img, title, price, description }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Divider variant="inset" component="li" />
     </>
   );
 };

@@ -47,7 +47,7 @@ const ProductCard = ({ img, alt, title, description, id, price }) => {
       <CardMedia component="img" height="140" image={img} alt={alt} />
       <CardContent>
         <Typography variant="h6" component="div">
-          {title}
+          {title.slice(0, 30) + "..."}
         </Typography>
         <Typography variant="p" component="p">
           ${price}
