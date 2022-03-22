@@ -5,6 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const TotalCard = () => {
@@ -51,7 +52,9 @@ const TotalCard = () => {
         </CardContent>
         <CardActions>
           <Button size="small" variant="contained">
-            Buy
+            <Link to="/pay" style={{ textDecoration: "none" }}>
+              Pay
+            </Link>
           </Button>
           <Button size="small">Learn More</Button>
         </CardActions>
