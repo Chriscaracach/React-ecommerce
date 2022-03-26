@@ -50,24 +50,23 @@ const CartProductCard = ({ id, img, title, price, description }) => {
         <ListItemAvatar>
           <Avatar alt={title} src={img} />
         </ListItemAvatar>
-
+        <TextField
+          id="outlined-number"
+          label="Quantity"
+          type="number"
+          size="small"
+          inputProps={{ min: 1 }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          sx={{ width: "70px" }}
+          defaultValue="1"
+          onChange={(e) => handleQuantity(e.target.value)}
+        />
         <ListItemText
           primary={title}
           secondary={
             <React.Fragment>
-              <TextField
-                id="outlined-number"
-                label="Quantity"
-                type="number"
-                size="small"
-                inputProps={{ min: 1 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                sx={{ width: "70px" }}
-                defaultValue="1"
-                onChange={(e) => handleQuantity(e.target.value)}
-              />
               <Button onClick={handleClickOpen}>Detail</Button>
             </React.Fragment>
           }
