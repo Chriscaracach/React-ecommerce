@@ -9,18 +9,24 @@ import {
 } from "react-leaflet";
 
 const LocationMarker = ({ handleLocation }) => {
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState([
+    -31.408740136908488, -64.19174194335939,
+  ]);
 
   const map = useMapEvents({
     click() {
       map.locate();
     },
+    locationfound(e) {
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, map.getZoom());
+    },
+    load() {
+      handleLocation(map.getCenter());
+    },
     moveend() {
       setPosition(map.getCenter());
       handleLocation(map.getCenter());
-    },
-    locationfound(e) {
-      map.flyTo(e.latlng, map.getZoom());
     },
   });
 
@@ -41,20 +47,26 @@ const LeafletMap = ({ handleLocation }) => {
         style={{
           margin: "0",
           width: "100%",
-          // textAlign: "-webkit-center",
+          textAlign: "-webkit-center",
           paddingBottom: "1em",
         }}
       >
         <MapContainer
           center={position}
           zoom={10}
-          style={{ height: "50vh", width: "50%" }}
+          style={{ height: "50vh" }}
+          whenCreated={(map) => {
+            handleLocation(map.getCenter());
+          }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <LocationMarker handleLocation={handleLocation}></LocationMarker>
         </MapContainer>
-        <Typography align="center">
+        <Typography align="center" variant="caption">
           Drag the map to the place where you want us to send your order
+        </Typography>
+        <Typography align="center" variant="body1">
+          Click/Tap to get your current location
         </Typography>
       </div>
     </>

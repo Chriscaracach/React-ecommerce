@@ -1,30 +1,32 @@
 import React, { useState } from "react";
-import * as Yup from "yup";
+
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { Formik, Form, Field } from "formik";
-import { TextField, Select } from "formik-mui";
+import MenuItem from "@mui/material/MenuItem";
 import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
 import { Container } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
+import { Typography } from "@mui/material";
+
+import { Formik, Form, Field } from "formik";
+import { TextField, Select } from "formik-mui";
+import * as Yup from "yup";
+
 import LeafletMap from "../components/LeafletMap";
 
 const Pay = () => {
   const [location, setLocation] = useState([]);
+  const [progressOpen, setProgressOpen] = useState(false);
 
   const handleLocation = (coordinates) => {
     setLocation(coordinates);
   };
 
   return (
-    <Box
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "100%" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <Container maxWidth="md">
+    <Box autoComplete="off" textAlign="center" sx={{ p: 0 }}>
+      <Typography variant="h3">Title</Typography>
+      <Container maxWidth="lg">
         <Formik
           initialValues={{
             name: "",
@@ -42,25 +44,36 @@ const Pay = () => {
             address: Yup.string().required("Field required"),
             payMethod: Yup.string().required("Field required"),
           })}
-          onSubmit={(values) => {
-            console.log(values);
+          onSubmit={(values, { setSubmitting }) => {
+            //TODO quizás sea mejor mandar todo al Redux y desde ahí sacar la info
+            setProgressOpen(true);
+            setTimeout(() => {
+              setProgressOpen(false);
+            }, 1400);
+            let sendValues = { ...values, location };
+            setTimeout(() => {
+              setSubmitting(false);
+              alert(JSON.stringify(sendValues, null, 2)); //TODO agregar productos comprados
+            }, 1500);
             //TODO Redirect
-            //! Cuidado porque todos los campos quedan disabled cuando submiteás
           }}
         >
           {({ submitForm, isSubmitting }) => (
             <Form>
               <Grid container sx={{ m: 2 }}>
-                <Grid item align="center" md={6}>
-                  <Grid item md={6}>
-                    <Field
-                      name="name"
-                      type="text"
-                      label="Name"
-                      component={TextField}
-                    />
+                <Grid item align="center" md={6} sm={6} lg={4}>
+                  {/* TODO Hacer Custom Fields, para no repetir tanto codigo */}
+                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                    <Box height="100%" display="flex" justifyContent="center">
+                      <Field
+                        name="name"
+                        type="text"
+                        label="Name"
+                        component={TextField}
+                      />
+                    </Box>
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
                     <Field
                       name="surname"
                       type="text"
@@ -68,7 +81,7 @@ const Pay = () => {
                       component={TextField}
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
                     <Field
                       name="email"
                       type="email"
@@ -76,7 +89,7 @@ const Pay = () => {
                       component={TextField}
                     />
                   </Grid>
-                  <Grid item md={6}>
+                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
                     <Field
                       name="address"
                       type="text"
@@ -84,7 +97,12 @@ const Pay = () => {
                       component={TextField}
                     />
                   </Grid>
-                  <Grid item md={12} align="center">
+                  <Grid
+                    item
+                    md={12}
+                    align="center"
+                    sx={{ marginBottom: "5px" }}
+                  >
                     <Field
                       name="payMethod"
                       type="select"
@@ -97,7 +115,7 @@ const Pay = () => {
                     </Field>
                   </Grid>
                 </Grid>
-                <Grid item align="center" md={6}>
+                <Grid item align="center" md={6} sm={6} lg={8}>
                   <LeafletMap handleLocation={handleLocation}></LeafletMap>
                   <Box textAlign="center">
                     <Button
@@ -110,6 +128,15 @@ const Pay = () => {
                   </Box>
                 </Grid>
               </Grid>
+              <Backdrop
+                sx={{
+                  color: "#fff",
+                  zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={progressOpen}
+              >
+                <CircularProgress color="inherit" />
+              </Backdrop>
             </Form>
           )}
         </Formik>
