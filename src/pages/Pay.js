@@ -16,12 +16,14 @@ import * as Yup from "yup";
 
 import LeafletMap from "../components/LeafletMap";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUserData } from "../features/userData/userDataSlice";
 
 const Pay = () => {
   const [location, setLocation] = useState([]);
   const [progressOpen, setProgressOpen] = useState(false);
+
+  const { cart } = useSelector((state) => state.cart);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,7 +60,10 @@ const Pay = () => {
             setTimeout(() => {
               setProgressOpen(false);
               setSubmitting(false);
-              alert(JSON.stringify(sendValues, null, 2)); //TODO agregar productos comprados
+              alert(
+                JSON.stringify(sendValues, null, 2) +
+                  JSON.stringify(cart, null, 2)
+              );
               navigate("/");
             }, 1400);
           }}
@@ -67,7 +72,6 @@ const Pay = () => {
             <Form>
               <Grid container sx={{ m: 2 }}>
                 <Grid item align="center" md={6} sm={6} lg={4}>
-                  {/* TODO Hacer Custom Fields, para no repetir tanto codigo */}
                   <Grid item md={6} sx={{ marginBottom: "10px" }}>
                     <Box height="100%" display="flex" justifyContent="center">
                       <Field

@@ -11,6 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
+import { Rating } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { sweetAlertSuccess } from "../services/sweetAlertServices";
 import {
@@ -20,7 +21,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-const ProductCard = ({ img, alt, title, description, id, price }) => {
+const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
@@ -43,7 +44,7 @@ const ProductCard = ({ img, alt, title, description, id, price }) => {
   };
 
   return (
-    <Card sx={{ width: 250, height: 450 }}>
+    <Card sx={{ width: 250, height: 350 }}>
       <CardMedia component="img" height="140" image={img} alt={alt} />
       <CardContent>
         <Typography variant="h6" component="div">
@@ -52,6 +53,7 @@ const ProductCard = ({ img, alt, title, description, id, price }) => {
         <Typography variant="p" component="p">
           ${price}
         </Typography>
+        <Rating name="read-only" value={rating} size="small" readOnly />
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => addToCart(id)}>

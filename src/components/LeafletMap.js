@@ -26,7 +26,8 @@ const LocationMarker = ({ handleLocation }) => {
     },
     moveend() {
       setPosition(map.getCenter());
-      handleLocation(map.getCenter());
+      let location = { lat: map.getCenter().lat, lng: map.getCenter().lng };
+      handleLocation(location);
     },
   });
 
