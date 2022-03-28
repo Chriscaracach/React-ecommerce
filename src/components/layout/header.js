@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Header = () => {
   return (
@@ -29,7 +30,7 @@ const Header = () => {
           </Typography>
           <Button color="inherit">
             <Link to="/cart" style={{ textDecoration: "none" }}>
-              Cart
+              <ShoppingCartIcon fontSize="large" />
             </Link>
           </Button>
         </Toolbar>

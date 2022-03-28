@@ -10,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
+import MenuItem from "@mui/material/MenuItem";
 
 const Shop = () => {
   const { products } = useSelector((state) => state.products);
@@ -33,12 +34,19 @@ const Shop = () => {
     );
   });
 
-  //!Cuando se carga por primera vez no muestra productos, por el texfield de search, es como que busca nada
-
   const handleSearch = (e) => {
     setFilteredProducts(
       products.filter((product) =>
         product.title.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+
+  const handleCategorySearch = (e) => {
+    setFilteredProducts(
+      products.filter(
+        (product) =>
+          product.category.toLowerCase() === e.target.value.toLowerCase()
       )
     );
   };
@@ -64,6 +72,19 @@ const Shop = () => {
               }}
               onChange={(e) => handleSearch(e)}
             />
+            <TextField
+              id="outlined-select-currency"
+              select
+              label="Select"
+              // value={""}
+              onChange={handleCategorySearch}
+              helperText="Filter by category"
+            >
+              <MenuItem value={"electronics"}>Electronics</MenuItem>
+              <MenuItem value={"jewelery"}>Jewelery</MenuItem>
+              <MenuItem value={"men's clothing"}>Men's clothing</MenuItem>
+              <MenuItem value={"women's clothing"}>Women's clothing</MenuItem>
+            </TextField>
           </Box>
           <Grid container spacing={3}>
             {map}

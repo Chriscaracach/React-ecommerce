@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Backdrop from "@mui/material/Backdrop";
@@ -31,6 +31,12 @@ const Pay = () => {
   const handleLocation = (coordinates) => {
     setLocation(coordinates);
   };
+
+  useEffect(() => {
+    if (!cart.length) {
+      return navigate("/");
+    }
+  }, []);
 
   return (
     <Box autoComplete="off" textAlign="center" sx={{ p: 0 }}>

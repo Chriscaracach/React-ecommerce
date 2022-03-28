@@ -3,6 +3,9 @@ import List from "@mui/material/List";
 import { useSelector } from "react-redux";
 import CartProductCard from "../components/CartProductCard";
 import TotalCard from "../components/TotalCard";
+import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Cart = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -27,7 +30,21 @@ const Cart = () => {
           <TotalCard></TotalCard>
         </>
       ) : (
-        <p>Empty cart</p>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            mt: 5,
+          }}
+        >
+          <ErrorIcon fontSize="large" />
+          <Typography variant="h5">Your cart is empty</Typography>
+          <Typography variant="caption">
+            Go back and add some products..
+          </Typography>
+        </Box>
       )}
     </>
   );
