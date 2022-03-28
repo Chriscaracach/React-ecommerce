@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import { CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 
 const Shop = () => {
   const { products } = useSelector((state) => state.products);
@@ -19,16 +21,26 @@ const Shop = () => {
           description={product.description}
         ></ProductCard>
       </Grid>
-    ) : (
-      <p>Cargando</p>
-    );
+    ) : null;
   });
 
   return (
     <Container sx={{ marginTop: 5 }}>
-      <Grid container spacing={3}>
-        {map}
-      </Grid>
+      {products.length ? (
+        <Grid container spacing={3}>
+          {map}
+        </Grid>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
     </Container>
   );
 };

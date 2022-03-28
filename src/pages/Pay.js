@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,9 +16,15 @@ import * as Yup from "yup";
 
 import LeafletMap from "../components/LeafletMap";
 
+import { useDispatch } from "react-redux";
+import { addUserData } from "../features/userData/userDataSlice";
+
 const Pay = () => {
   const [location, setLocation] = useState([]);
   const [progressOpen, setProgressOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLocation = (coordinates) => {
     setLocation(coordinates);
@@ -45,17 +52,15 @@ const Pay = () => {
             payMethod: Yup.string().required("Field required"),
           })}
           onSubmit={(values, { setSubmitting }) => {
-            //TODO quizás sea mejor mandar todo al Redux y desde ahí sacar la info
+            let sendValues = { ...values, location };
             setProgressOpen(true);
+            dispatch(addUserData(sendValues));
             setTimeout(() => {
               setProgressOpen(false);
-            }, 1400);
-            let sendValues = { ...values, location };
-            setTimeout(() => {
               setSubmitting(false);
               alert(JSON.stringify(sendValues, null, 2)); //TODO agregar productos comprados
-            }, 1500);
-            //TODO Redirect
+              navigate("/");
+            }, 1400);
           }}
         >
           {({ submitForm, isSubmitting }) => (

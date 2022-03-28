@@ -6,7 +6,7 @@ import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import Pay from "./pages/Pay";
 import { useDispatch } from "react-redux";
-import { getProducts } from "./features/cart/cartSlice";
+import { getProducts } from "./features/products/productsSlice";
 
 function App() {
   const dispatch = useDispatch();

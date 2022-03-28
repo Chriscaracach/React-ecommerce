@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 const CartProductCard = ({ id, img, title, price, description }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state.products);
+  const { cart } = useSelector((state) => state.cart);
   const productQuantity = cart.filter((product) => product.id === id)[0]
     .quantity;
   const handleClickOpen = () => {

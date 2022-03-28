@@ -5,7 +5,7 @@ import CartProductCard from "../components/CartProductCard";
 import TotalCard from "../components/TotalCard";
 
 const Cart = () => {
-  const { cart } = useSelector((state) => state.products);
+  const { cart } = useSelector((state) => state.cart);
 
   const map = cart.map((product) => {
     return (

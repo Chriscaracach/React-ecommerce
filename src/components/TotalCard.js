@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 const TotalCard = () => {
   const [total, setTotal] = useState(0);
-  const { cart } = useSelector((state) => state.products);
+  const { cart } = useSelector((state) => state.cart);
 
   useEffect(() => {
     let prices = [];
