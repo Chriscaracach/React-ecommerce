@@ -56,7 +56,7 @@ const Shop = () => {
   }, [products]);
 
   return (
-    <Container sx={{ marginTop: 4 }}>
+    <Container sx={{ marginTop: "100px" }}>
       {products.length ? (
         <>
           <Box sx={{ display: "flex", justifyContent: "center", m: 4 }}>
@@ -86,7 +86,15 @@ const Shop = () => {
               <MenuItem value={"women's clothing"}>Women's clothing</MenuItem>
             </TextField>
           </Box>
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {map}
           </Grid>
         </>

@@ -12,15 +12,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative">
+      <AppBar position="fixed">
         <Toolbar>
           <Link to="/" style={{ textDecoration: "none" }}>
             <IconButton
-              size="large"
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{ ml: 2, color: "#fafafa" }}
             >
               <HomeIcon />
             </IconButton>
@@ -28,9 +27,12 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             E-commerce
           </Typography>
-          <Button color="inherit">
+          <Button>
             <Link to="/cart" style={{ textDecoration: "none" }}>
-              <ShoppingCartIcon fontSize="large" />
+              <ShoppingCartIcon
+                fontSize="medium"
+                sx={{ mr: 2, color: "#fafafa" }}
+              />
             </Link>
           </Button>
         </Toolbar>

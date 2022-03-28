@@ -3,6 +3,7 @@ import List from "@mui/material/List";
 import { useSelector } from "react-redux";
 import CartProductCard from "../components/CartProductCard";
 import TotalCard from "../components/TotalCard";
+import { Container } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -23,7 +24,7 @@ const Cart = () => {
     );
   });
   return (
-    <>
+    <Container sx={{ marginTop: "100px" }}>
       {map.length ? (
         <>
           <List sx={{ width: "100%" }}>{map}</List>
@@ -46,7 +47,7 @@ const Cart = () => {
           </Typography>
         </Box>
       )}
-    </>
+    </Container>
   );
 };
 

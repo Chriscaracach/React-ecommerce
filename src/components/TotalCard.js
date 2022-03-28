@@ -29,7 +29,7 @@ const TotalCard = () => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-end",
+        alignItems: "center",
         justifyContent: "center",
       }}
     >
@@ -40,24 +40,38 @@ const TotalCard = () => {
           flexDirection: "column",
           alignItems: "flex-start",
           justifyContent: "center",
+          minWidth: "150px",
         }}
       >
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Total
-          </Typography>
-          <Typography variant="h5" component="div">
-            ${total}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" variant="contained">
-            <Link to="/pay" style={{ textDecoration: "none" }}>
-              Pay
-            </Link>
-          </Button>
-          <Button size="small">Learn More</Button>
-        </CardActions>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Total
+            </Typography>
+            <Typography variant="h5" component="div">
+              ${total}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" variant="contained">
+              <Link to="/pay" style={{ textDecoration: "none" }}>
+                Pay
+              </Link>
+            </Button>
+          </CardActions>
+        </Box>
       </Card>
     </Box>
   );

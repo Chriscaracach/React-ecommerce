@@ -39,124 +39,126 @@ const Pay = () => {
   }, []);
 
   return (
-    <Box autoComplete="off" textAlign="center" sx={{ p: 0 }}>
-      <Typography variant="h3">Title</Typography>
-      <Container maxWidth="lg">
-        <Formik
-          initialValues={{
-            name: "",
-            surname: "",
-            email: "",
-            address: "",
-            payMethod: "",
-          }}
-          validationSchema={Yup.object({
-            name: Yup.string().required("Field required"),
-            surname: Yup.string().required("Field required"),
-            email: Yup.string()
-              .email("Invalid email format")
-              .required("Field required"),
-            address: Yup.string().required("Field required"),
-            payMethod: Yup.string().required("Field required"),
-          })}
-          onSubmit={(values, { setSubmitting }) => {
-            let sendValues = { ...values, location };
-            setProgressOpen(true);
-            dispatch(addUserData(sendValues));
-            setTimeout(() => {
-              setProgressOpen(false);
-              setSubmitting(false);
-              alert(
-                JSON.stringify(sendValues, null, 2) +
-                  JSON.stringify(cart, null, 2)
-              );
-              navigate("/");
-            }, 1400);
-          }}
-        >
-          {({ submitForm, isSubmitting }) => (
-            <Form>
-              <Grid container sx={{ m: 2 }}>
-                <Grid item align="center" md={6} sm={6} lg={4}>
-                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
-                    <Box height="100%" display="flex" justifyContent="center">
+    <Container sx={{ marginTop: "100px" }}>
+      <Box autoComplete="off" textAlign="center" sx={{ p: 0 }}>
+        <Typography variant="h3">Title</Typography>
+        <Container maxWidth="lg">
+          <Formik
+            initialValues={{
+              name: "",
+              surname: "",
+              email: "",
+              address: "",
+              payMethod: "",
+            }}
+            validationSchema={Yup.object({
+              name: Yup.string().required("Field required"),
+              surname: Yup.string().required("Field required"),
+              email: Yup.string()
+                .email("Invalid email format")
+                .required("Field required"),
+              address: Yup.string().required("Field required"),
+              payMethod: Yup.string().required("Field required"),
+            })}
+            onSubmit={(values, { setSubmitting }) => {
+              let sendValues = { ...values, location };
+              setProgressOpen(true);
+              dispatch(addUserData(sendValues));
+              setTimeout(() => {
+                setProgressOpen(false);
+                setSubmitting(false);
+                alert(
+                  JSON.stringify(sendValues, null, 2) +
+                    JSON.stringify(cart, null, 2)
+                );
+                navigate("/");
+              }, 1400);
+            }}
+          >
+            {({ submitForm, isSubmitting }) => (
+              <Form>
+                <Grid container sx={{ m: 2 }}>
+                  <Grid item align="center" md={6} sm={6} lg={4}>
+                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                      <Box height="100%" display="flex" justifyContent="center">
+                        <Field
+                          name="name"
+                          type="text"
+                          label="Name"
+                          component={TextField}
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
                       <Field
-                        name="name"
+                        name="surname"
                         type="text"
-                        label="Name"
+                        label="Surname"
                         component={TextField}
                       />
+                    </Grid>
+                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                      <Field
+                        name="email"
+                        type="email"
+                        label="Email"
+                        component={TextField}
+                      />
+                    </Grid>
+                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                      <Field
+                        name="address"
+                        type="text"
+                        label="Address"
+                        component={TextField}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      md={12}
+                      align="center"
+                      sx={{ marginBottom: "5px" }}
+                    >
+                      <Field
+                        name="payMethod"
+                        type="select"
+                        label="Pay Method"
+                        component={Select}
+                        formHelperText={{ children: "Select your pay method" }}
+                      >
+                        <MenuItem value="Mercado-Pago">Mercado Pago</MenuItem>
+                        <MenuItem value="Cash">Cash</MenuItem>
+                      </Field>
+                    </Grid>
+                  </Grid>
+                  <Grid item align="center" md={6} sm={6} lg={8}>
+                    <LeafletMap handleLocation={handleLocation}></LeafletMap>
+                    <Box textAlign="center">
+                      <Button
+                        variant="contained"
+                        onClick={submitForm}
+                        disabled={isSubmitting}
+                      >
+                        Pay
+                      </Button>
                     </Box>
                   </Grid>
-                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
-                    <Field
-                      name="surname"
-                      type="text"
-                      label="Surname"
-                      component={TextField}
-                    />
-                  </Grid>
-                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
-                    <Field
-                      name="email"
-                      type="email"
-                      label="Email"
-                      component={TextField}
-                    />
-                  </Grid>
-                  <Grid item md={6} sx={{ marginBottom: "10px" }}>
-                    <Field
-                      name="address"
-                      type="text"
-                      label="Address"
-                      component={TextField}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    md={12}
-                    align="center"
-                    sx={{ marginBottom: "5px" }}
-                  >
-                    <Field
-                      name="payMethod"
-                      type="select"
-                      label="Pay Method"
-                      component={Select}
-                      formHelperText={{ children: "Select your pay method" }}
-                    >
-                      <MenuItem value="Mercado-Pago">Mercado Pago</MenuItem>
-                      <MenuItem value="Cash">Cash</MenuItem>
-                    </Field>
-                  </Grid>
                 </Grid>
-                <Grid item align="center" md={6} sm={6} lg={8}>
-                  <LeafletMap handleLocation={handleLocation}></LeafletMap>
-                  <Box textAlign="center">
-                    <Button
-                      variant="contained"
-                      onClick={submitForm}
-                      disabled={isSubmitting}
-                    >
-                      Pay
-                    </Button>
-                  </Box>
-                </Grid>
-              </Grid>
-              <Backdrop
-                sx={{
-                  color: "#fff",
-                  zIndex: (theme) => theme.zIndex.drawer + 1,
-                }}
-                open={progressOpen}
-              >
-                <CircularProgress color="inherit" />
-              </Backdrop>
-            </Form>
-          )}
-        </Formik>
-      </Container>
-    </Box>
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={progressOpen}
+                >
+                  <CircularProgress color="inherit" />
+                </Backdrop>
+              </Form>
+            )}
+          </Formik>
+        </Container>
+      </Box>
+    </Container>
   );
 };
 

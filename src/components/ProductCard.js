@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
-import { Rating } from "@mui/material";
+import { Box, Rating } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { sweetAlertSuccess } from "../services/sweetAlertServices";
 import {
@@ -56,12 +56,14 @@ const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
         <Rating name="read-only" value={rating} size="small" readOnly />
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => addToCart(id)}>
-          <AddShoppingCartIcon />
-        </Button>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Detail
-        </Button>
+        <Box sx={{}}>
+          <Button size="small" onClick={() => addToCart(id)}>
+            <AddShoppingCartIcon />
+          </Button>
+          <Button variant="outlined" onClick={handleClickOpen}>
+            Detail
+          </Button>
+        </Box>
       </CardActions>
       <Dialog
         open={open}
