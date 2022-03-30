@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ListItem from "@mui/material/ListItem";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
@@ -64,7 +65,7 @@ const CartProductCard = ({ id, img, title, price, description }) => {
           onChange={(e) => handleQuantity(e.target.value)}
         />
         <ListItemText
-          primary={title}
+          primary={title.slice(0, 10) + "..."}
           secondary={
             <React.Fragment>
               <Button onClick={handleClickOpen}>Detail</Button>
@@ -94,7 +95,7 @@ const CartProductCard = ({ id, img, title, price, description }) => {
       >
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <Grid container>
+          <Grid container alignItems="center" justifyContent="center">
             <Grid item>
               <img src={img} alt={title} style={{ width: "200px" }} />
             </Grid>

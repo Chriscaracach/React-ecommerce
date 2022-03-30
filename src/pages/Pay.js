@@ -18,6 +18,9 @@ import LeafletMap from "../components/LeafletMap";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addUserData } from "../features/userData/userDataSlice";
+import { resetCart } from "../features/cart/cartSlice";
+
+import { sweetAlertInfo } from "../services/sweetAlertServices";
 
 const Pay = () => {
   const [location, setLocation] = useState([]);
@@ -36,12 +39,12 @@ const Pay = () => {
     if (!cart.length) {
       return navigate("/");
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   return (
     <Container sx={{ marginTop: "100px" }}>
       <Box autoComplete="off" textAlign="center" sx={{ p: 0 }}>
-        <Typography variant="h3">Title</Typography>
+        <Typography variant="h5">Please, enter your data</Typography>
         <Container maxWidth="lg">
           <Formik
             initialValues={{
@@ -67,29 +70,30 @@ const Pay = () => {
               setTimeout(() => {
                 setProgressOpen(false);
                 setSubmitting(false);
-                alert(
-                  JSON.stringify(sendValues, null, 2) +
-                    JSON.stringify(cart, null, 2)
+                console.log("Data to send");
+                console.log(sendValues);
+                console.log(cart);
+                sweetAlertInfo(
+                  "The purchase has been succesflly done, the data has been logged to the console"
                 );
+                dispatch(resetCart());
                 navigate("/");
               }, 1400);
             }}
           >
             {({ submitForm, isSubmitting }) => (
               <Form>
-                <Grid container sx={{ m: 2 }}>
-                  <Grid item align="center" md={6} sm={6} lg={4}>
-                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
-                      <Box height="100%" display="flex" justifyContent="center">
-                        <Field
-                          name="name"
-                          type="text"
-                          label="Name"
-                          component={TextField}
-                        />
-                      </Box>
+                <Grid container sx={{ mt: 2 }}>
+                  <Grid item md={6} xs={12} lg={4}>
+                    <Grid item sx={{ marginBottom: "10px" }}>
+                      <Field
+                        name="name"
+                        type="text"
+                        label="Name"
+                        component={TextField}
+                      />
                     </Grid>
-                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                    <Grid item sx={{ marginBottom: "10px" }}>
                       <Field
                         name="surname"
                         type="text"
@@ -97,7 +101,7 @@ const Pay = () => {
                         component={TextField}
                       />
                     </Grid>
-                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                    <Grid item sx={{ marginBottom: "10px" }}>
                       <Field
                         name="email"
                         type="email"
@@ -105,7 +109,7 @@ const Pay = () => {
                         component={TextField}
                       />
                     </Grid>
-                    <Grid item md={6} sx={{ marginBottom: "10px" }}>
+                    <Grid item sx={{ marginBottom: "10px" }}>
                       <Field
                         name="address"
                         type="text"
@@ -113,12 +117,7 @@ const Pay = () => {
                         component={TextField}
                       />
                     </Grid>
-                    <Grid
-                      item
-                      md={12}
-                      align="center"
-                      sx={{ marginBottom: "5px" }}
-                    >
+                    <Grid item align="center" sx={{ marginBottom: "5px" }}>
                       <Field
                         name="payMethod"
                         type="select"
@@ -131,7 +130,7 @@ const Pay = () => {
                       </Field>
                     </Grid>
                   </Grid>
-                  <Grid item align="center" md={6} sm={6} lg={8}>
+                  <Grid item md={6} sm={6} lg={8}>
                     <LeafletMap handleLocation={handleLocation}></LeafletMap>
                     <Box textAlign="center">
                       <Button

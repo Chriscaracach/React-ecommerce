@@ -16,6 +16,9 @@ export const cartSlice = createSlice({
         return product.id !== action.payload;
       });
     },
+    resetCart: (state) => {
+      state.cart = [];
+    },
     addQuantityDefault: (state, action) => {
       state.cart.forEach((product) => {
         product.quantity = action.payload;
@@ -35,6 +38,7 @@ export const {
   deleteProductFromCart,
   addQuantityDefault,
   modifyQuantity,
+  resetCart,
 } = cartSlice.actions;
 
 export const cartProducts = (state) => state.cart.value;

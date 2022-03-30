@@ -27,14 +27,20 @@ const Header = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             E-commerce
           </Typography>
-          <Button>
-            <Link to="/cart" style={{ textDecoration: "none" }}>
+
+          <Link to="/cart" style={{ textDecoration: "none" }}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ ml: 2, color: "#fafafa" }}
+            >
               <ShoppingCartIcon
                 fontSize="medium"
                 sx={{ mr: 2, color: "#fafafa" }}
               />
-            </Link>
-          </Button>
+            </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>

@@ -12,6 +12,7 @@ import { Typography } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import MenuItem from "@mui/material/MenuItem";
 import { Pagination } from "@mui/material";
+import TakingTooLong from "../components/TakingTooLong";
 
 const Shop = () => {
   const { products } = useSelector((state) => state.products);
@@ -59,6 +60,7 @@ const Shop = () => {
   };
 
   const handleCategorySearch = (e) => {
+    setPage(1);
     setFilteredProducts(
       products.filter(
         (product) =>
@@ -141,12 +143,15 @@ const Shop = () => {
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            gap: "10px",
             height: "80vh",
           }}
         >
           <CircularProgress />
+          <TakingTooLong />
         </Box>
       )}
       {searchError && (

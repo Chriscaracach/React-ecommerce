@@ -13,7 +13,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import { Box, Rating } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { sweetAlertSuccess } from "../services/sweetAlertServices";
+import {
+  sweetAlertSuccess,
+  sweetAlertError,
+} from "../services/sweetAlertServices";
 import {
   addProductToCart,
   addQuantityDefault,
@@ -25,6 +28,7 @@ const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const { cart } = useSelector((state) => state.cart);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,6 +42,10 @@ const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
     let filteredProduct = products.filter((product) => {
       return product.id === uniqueId;
     });
+    if (cart.find((product) => product.id === uniqueId)) {
+      sweetAlertError("Product already in cart");
+      return;
+    }
     dispatch(addProductToCart(filteredProduct[0]));
     dispatch(addQuantityDefault(1));
     sweetAlertSuccess("Product added to cart");
@@ -46,7 +54,7 @@ const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
   return (
     <Card sx={{ width: 250, height: 350 }}>
       <CardMedia component="img" height="140" image={img} alt={alt} />
-      <CardContent>
+      <CardContent sx={{ minHeight: "30%" }}>
         <Typography variant="h6" component="div">
           {title.slice(0, 30) + "..."}
         </Typography>
@@ -55,15 +63,16 @@ const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
         </Typography>
         <Rating name="read-only" value={rating} size="small" readOnly />
       </CardContent>
-      <CardActions>
-        <Box sx={{}}>
-          <Button size="small" onClick={() => addToCart(id)}>
-            <AddShoppingCartIcon />
-          </Button>
-          <Button variant="outlined" onClick={handleClickOpen}>
-            Detail
-          </Button>
-        </Box>
+      <CardActions
+        disableSpacing
+        sx={{ display: "flex", justifyContent: "flex-end" }}
+      >
+        <Button variant="outlined" onClick={handleClickOpen}>
+          Detail
+        </Button>
+        <Button size="small" onClick={() => addToCart(id)}>
+          <AddShoppingCartIcon />
+        </Button>
       </CardActions>
       <Dialog
         open={open}
@@ -73,7 +82,7 @@ const ProductCard = ({ img, alt, title, description, id, price, rating }) => {
       >
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <Grid container>
+          <Grid container alignItems="center" justifyContent="center">
             <Grid item>
               <img src={img} alt={title} style={{ width: "200px" }} />
             </Grid>
