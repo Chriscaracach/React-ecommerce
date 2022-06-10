@@ -34,7 +34,7 @@ And finish the purchase with some data input (simple form and Leaflet Map)
 
 
 
-## For installing follow this steps
+## Installing
 
 ```
 git clone https://github.com/Chriscaracach/React-ecommerce
